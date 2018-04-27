@@ -5,10 +5,11 @@ import com.example.fullbackend.repository.ArticleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @Controller
 @RequestMapping("/api/articles")
@@ -31,33 +32,23 @@ public class MainController {
     }
 
     @PutMapping("/{id}")
-    public @ResponseBody
-    Article update(@PathVariable(value = "id") long id, @RequestBody Map<String, Object> payload) throws Exception {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public HttpEntity<Article> update(@PathVariable(value = "id") long id, @RequestBody Article articleNew) throws Exception {
         Article article = articleRepository.findById(id).get();
-        if (payload.get("title") != null) {
-            String title = payload.get("title").toString();
-            article.setTitle(title);
+        if (articleNew.getTitle() != null) {
+            article.setTitle(articleNew.getTitle());
         }
-        if (payload.get("body") != null) {
-            String body = payload.get("body").toString();
-            article.setBody(body);
+        if (articleNew.getBody() != null) {
+            article.setBody(articleNew.getBody());
         }
         articleRepository.save(article);
-        return article;
+        return new ResponseEntity<>(article, HttpStatus.OK);
     }
 
     @PostMapping("/")
+    @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    Article create(@RequestBody Map<String, Object> payload) throws Exception {
-        Article article = new Article();
-        if (payload.get("title") != null) {
-            String title = payload.get("title").toString();
-            article.setTitle(title);
-        }
-        if (payload.get("body") != null) {
-            String body = payload.get("body").toString();
-            article.setBody(body);
-        }
+    Article create(@RequestBody Article article) throws Exception {
         article = articleRepository.save(article);
         return article;
     }

@@ -1,5 +1,6 @@
 package com.example.fullbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -22,10 +23,12 @@ public class Article {
 
     @Column(name = "createdAt")
     @CreationTimestamp
+    @JsonProperty("created_at")
     private Timestamp createdAt;
 
     @Column(name = "updatedAt")
     @UpdateTimestamp
+    @JsonProperty("updated_at")
     private Timestamp updatedAt;
 
     public Article() {
