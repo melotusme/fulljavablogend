@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 @Entity
@@ -18,6 +19,7 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
     private Long Id;
+    @Size(min = 1)
     private String title;
     private String body;
 
@@ -32,5 +34,10 @@ public class Article {
     private Timestamp updatedAt;
 
     public Article() {
+    }
+
+    public Article(String title, String body) {
+        this.title = title;
+        this.body = body;
     }
 }
