@@ -1,7 +1,6 @@
 package com.example.fullbackend.repository;
 
 import com.example.fullbackend.entity.Article;
-import com.example.fullbackend.repository.ArticleRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
